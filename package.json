@@ -7,4 +7,7 @@
     "build": "npm run build -w fardin-portfolio-demo",
     "preview": "npm run preview -w fardin-portfolio-demo"
   }
+  ,"optionalDependencies": {
+    "@esbuild/linux-x64": "0.18.20"
+  }
 }
