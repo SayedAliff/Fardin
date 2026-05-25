@@ -1,0 +1,10 @@
+{
+  "name": "fardin-monorepo",
+  "private": true,
+  "workspaces": ["fardin"],
+  "scripts": {
+    "dev": "npm run dev -w fardin-portfolio-demo",
+    "build": "npm run build -w fardin-portfolio-demo",
+    "preview": "npm run preview -w fardin-portfolio-demo"
+  }
+}

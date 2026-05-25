@@ -1,33 +1,30 @@
-Fardin - Gaming-style Portfolio
+Fardin Portfolio Workspace
 
-This folder contains a simple gaming-themed portfolio page for Fardin, based on the styling and layout of the referenced portfolio repo. Open `fardin/index.html` in a browser to view.
-Files of interest:
-- `fardin/index.html` — main portfolio page
-- `fardin/styles.css` — styles and theme
-- `fardin/script.js` — small interactions (contact/hire buttons)
-- `fardin/assets/avatar.svg` — avatar image used in the header
+This repository contains the Vite app in the `fardin/` folder, with a small root wrapper so Vercel can build it from the repo root.
 
-Run / Preview
-
-1. Open locally (double-click or use the `open` command on macOS):
+## Run locally
 
 ```bash
-open fardin/index.html
+cd /Users/alif/Downloads/Fardin
+npm install
+npm run dev
 ```
 
-2. Or serve via a simple HTTP server (recommended for consistent asset loading):
+## Build / Preview
 
 ```bash
-# from the Fardin folder
-python3 -m http.server 8000
-# then open http://localhost:8000/fardin/index.html
+npm run build
+npm run preview
 ```
 
-Next steps you can ask me to do:
-- Swap placeholder contact emails with real ones
-- Add more gaming assets (background art, sprites)
-- Integrate into your GitHub repo and create a branch/commit
- - Add an animated hero background (canvas-based) — implemented
-Single-page behavior
+## Vercel
 
-- The site is now a single-page portfolio with a fixed top navigation. Clicking a nav link scrolls to the corresponding section using smooth scrolling. The active nav item highlights while scrolling.
+- Root build command: `npm run build`
+- Output directory: `fardin/dist`
+- The actual app lives in `fardin/`
+
+## Notes
+
+- `package.json` at the repo root proxies scripts to the Vite workspace.
+- `vercel.json` forces Vercel to use the correct build command.
+- The app source stays in `fardin/src/`.
