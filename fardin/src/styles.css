@@ -12,20 +12,6 @@
 	--shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
 }
 
-[data-theme="light"] {
-	--bg: #f6f8ff;
-	--bg-soft: #ebf0ff;
-	--panel: rgba(255, 255, 255, 0.86);
-	--panel-strong: rgba(255, 255, 255, 0.96);
-	--border: rgba(95, 118, 191, 0.18);
-	--text: #10172a;
-	--muted: #5c6789;
-	--accent: #0ea5e9;
-	--accent-2: #7c3aed;
-	--primary: #0ea5e9;
-	--shadow: 0 18px 48px rgba(43, 61, 122, 0.16);
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -82,7 +68,7 @@ img {
 }
 
 [data-theme="light"] .site-header {
-	background: linear-gradient(180deg, rgba(246, 248, 255, 0.92), rgba(246, 248, 255, 0.68));
+	/* light theme removed - dark only by default */
 }
 
 .nav {
@@ -195,7 +181,7 @@ img {
 }
 
 [data-theme="light"] .hero > div {
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.6));
+	/* light theme removed - dark only by default */
 }
 
 .hero > div::after {

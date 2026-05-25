@@ -9,16 +9,13 @@ import Certificates from './components/Certificates'
 
 export default function App(){
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [theme, setTheme] = useState<'dark'|'light'>(() => (localStorage.getItem('theme') as 'dark'|'light') || 'dark')
   const [active, setActive] = useState<string>('home')
-  const [reduceMotion, setReduceMotion] = useState<boolean>(() => localStorage.getItem('reduceMotion') === '1')
 
   const sections = ['home','projects','skills','experience','certificates','education','contact']
 
   useEffect(()=>{
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('theme', theme)
-  },[theme])
+    document.documentElement.setAttribute('data-theme', 'dark')
+  },[])
 
   useEffect(()=>{
     const observer = new IntersectionObserver((entries)=>{
@@ -63,8 +60,6 @@ export default function App(){
           </div>
 
           <div className="controls">
-            <button aria-pressed={theme==='dark'} className="btn" onClick={()=> setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? 'Light' : 'Dark'}</button>
-            <button aria-pressed={reduceMotion} title="Reduce motion" className="btn" onClick={()=>{ const v=!reduceMotion; setReduceMotion(v); localStorage.setItem('reduceMotion', v ? '1' : '0') }} style={{marginLeft:8}}>{reduceMotion ? 'Animation Off' : 'Animation On'}</button>
             <button aria-controls="mobile-menu" aria-expanded={mobileOpen} className="btn" onClick={()=> setMobileOpen(!mobileOpen)} style={{marginLeft:8}}>Menu</button>
           </div>
         </nav>

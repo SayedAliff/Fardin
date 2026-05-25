@@ -20,8 +20,7 @@ export default function Hero() {
     let height = 0
     let nodes: Array<{ x: number; y: number; vx: number; vy: number; r: number }> = []
 
-    const prefersReduced =
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches || localStorage.getItem('reduceMotion') === '1'
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     const rand = (min: number, max: number) => Math.random() * (max - min) + min
