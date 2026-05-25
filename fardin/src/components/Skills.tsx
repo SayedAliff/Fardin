@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Skills(){
-  const skills = ['Game Dev','Unity','Unreal','React','Node.js','Design']
+  const skills = ['Creative AI','Motion Design','Generative UI','React','TypeScript','Visual Systems','Art Direction','Prototyping']
   return (
     <div className="container">
       <h2 className="section-title">Skills</h2>

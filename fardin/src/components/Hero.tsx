@@ -1,123 +1,164 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-export default function Hero(){
+export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const techs = ['React','TypeScript','Canvas','Unity','C#','Vite']
-  const [txt, setTxt] = React.useState('')
-  const [ti, setTi] = React.useState(0)
-  const [char, setChar] = React.useState(0)
+  const techs = ['Generative UI', 'Creative AI', 'Motion Systems', 'TypeScript', 'Canvas', 'Portfolio Design']
+  const [typed, setTyped] = useState('')
+  const [index, setIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if(!canvas) return
-    const ctx = canvas.getContext('2d')!
-    let w = canvas.width = canvas.clientWidth * devicePixelRatio
-    let h = canvas.height = canvas.clientHeight * devicePixelRatio
-    const TAU = Math.PI * 2
-    let particles: any[] = []
+    if (!canvas) return
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches || localStorage.getItem('reduceMotion') === '1'
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let frame = 0
+    let raf = 0
+    let width = 0
+    let height = 0
+    let nodes: Array<{ x: number; y: number; vx: number; vy: number; r: number }> = []
+
+    const prefersReduced =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches || localStorage.getItem('reduceMotion') === '1'
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
-    function rand(min: number, max: number){ return Math.random() * (max - min) + min }
+    const rand = (min: number, max: number) => Math.random() * (max - min) + min
 
-    function Particle(){
-      this.x = rand(0, w)
-      this.y = rand(0, h)
-      this.r = rand(1.2, 3) * devicePixelRatio
-      this.vx = rand(-0.25, 0.25) * devicePixelRatio
-      this.vy = rand(-0.15, 0.15) * devicePixelRatio
+    const resize = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2)
+      width = canvas.width = Math.floor(canvas.clientWidth * ratio)
+      height = canvas.height = Math.floor(canvas.clientHeight * ratio)
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+
+      const count = prefersReduced || isTouch ? 10 : Math.max(18, Math.floor(width * 0.018))
+      nodes = Array.from({ length: count }, () => ({
+        x: rand(0, width),
+        y: rand(0, height),
+        vx: rand(-0.18, 0.18),
+        vy: rand(-0.12, 0.12),
+        r: rand(1.3, 3.2) * ratio,
+      }))
     }
 
-    function resize(){
-      w = canvas.width = canvas.clientWidth * devicePixelRatio
-      h = canvas.height = canvas.clientHeight * devicePixelRatio
-      particles = []
-      const baseCount = Math.floor(w * 0.02)
-      // reduce particles on small screens or touch devices
-      const count = prefersReduced || isTouch ? Math.max(6, Math.floor(baseCount * 0.35)) : Math.max(18, baseCount)
-      for(let i=0;i<count;i++) particles.push(new (Particle as any)())
-    }
+    const draw = () => {
+      if (prefersReduced) return
 
-    function draw(){
-      if(prefersReduced) return
-      ctx.clearRect(0,0,w,h)
-      for(const p of particles){
-        p.x += p.vx; p.y += p.vy
-        if(p.x < -20) p.x = w + 20
-        if(p.x > w + 20) p.x = -20
-        if(p.y < -20) p.y = h + 20
-        if(p.y > h + 20) p.y = -20
+      frame += 1
+      ctx.clearRect(0, 0, width, height)
 
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*8)
-        g.addColorStop(0, 'rgba(124,58,237,0.14)')
-        g.addColorStop(0.4, 'rgba(6,182,212,0.06)')
-        g.addColorStop(1, 'rgba(2,6,23,0)')
-        ctx.fillStyle = g
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r*6, 0, TAU); ctx.fill()
+      const gridAlpha = 0.12
+      ctx.strokeStyle = `rgba(102, 227, 255, ${gridAlpha})`
+      ctx.lineWidth = 1
+      const spacing = 64 * (window.devicePixelRatio || 1)
+
+      for (let x = frame % spacing; x < width; x += spacing) {
+        ctx.beginPath()
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, height)
+        ctx.stroke()
       }
 
-      // lines
-      ctx.lineWidth = 0.4 * devicePixelRatio
-      for(let i=0;i<particles.length;i++){
-        for(let j=i+1;j<particles.length;j++){
-          const a = particles[i], b = particles[j]
-          const dx = a.x - b.x, dy = a.y - b.y
-          const d = Math.sqrt(dx*dx+dy*dy)
-          if(d < (w * 0.12)){
-            const alpha = 0.18 * (1 - d / (w * 0.12))
-            ctx.strokeStyle = `rgba(124,58,237,${alpha})`
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke()
+      for (const node of nodes) {
+        node.x += node.vx
+        node.y += node.vy
+
+        if (node.x < -30) node.x = width + 30
+        if (node.x > width + 30) node.x = -30
+        if (node.y < -30) node.y = height + 30
+        if (node.y > height + 30) node.y = -30
+
+        const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.r * 14)
+        glow.addColorStop(0, 'rgba(102, 227, 255, 0.22)')
+        glow.addColorStop(0.4, 'rgba(139, 123, 255, 0.16)')
+        glow.addColorStop(1, 'rgba(2, 6, 23, 0)')
+        ctx.fillStyle = glow
+        ctx.beginPath()
+        ctx.arc(node.x, node.y, node.r * 9, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      for (let i = 0; i < nodes.length; i += 1) {
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const a = nodes[i]
+          const b = nodes[j]
+          const dx = a.x - b.x
+          const dy = a.y - b.y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+
+          if (distance < width * 0.13) {
+            ctx.strokeStyle = `rgba(102, 227, 255, ${0.16 * (1 - distance / (width * 0.13))})`
+            ctx.beginPath()
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(b.x, b.y)
+            ctx.stroke()
           }
         }
       }
 
-      requestAnimationFrame(draw)
+      raf = requestAnimationFrame(draw)
     }
 
     resize()
     window.addEventListener('resize', resize)
-    const raf = requestAnimationFrame(draw)
+    raf = requestAnimationFrame(draw)
 
-    return ()=>{
+    return () => {
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(raf)
     }
   }, [])
 
-  // Simple typewriter for tech row
-  useEffect(()=>{
-    const interval = setInterval(()=>{
-      const current = techs[ti % techs.length]
-      if(char < current.length){
-        setTxt(t=> t + current[char])
-        setChar(c=> c+1)
-      } else {
-        // pause then clear
-        setTimeout(()=>{
-          setTxt('')
-          setChar(0)
-          setTi(i=> i+1)
-        },800)
+  useEffect(() => {
+    const current = techs[index % techs.length]
+
+    const timer = window.setTimeout(() => {
+      if (charIndex < current.length) {
+        setTyped((value) => value + current.charAt(charIndex))
+        setCharIndex((value) => value + 1)
+        return
       }
-    },120)
-    return ()=> clearInterval(interval)
-  },[char,ti])
+
+      const resetTimer = window.setTimeout(() => {
+        setTyped('')
+        setCharIndex(0)
+        setIndex((value) => value + 1)
+      }, 1100)
+
+      return () => window.clearTimeout(resetTimer)
+    }, 96)
+
+    return () => window.clearTimeout(timer)
+  }, [charIndex, index, techs])
 
   return (
     <div className="hero container">
-      <div style={{position:'relative'}}>
-        <canvas ref={canvasRef} style={{width:'100%',height:220,position:'absolute',left:0,top:0,zIndex:0}} />
-        <div style={{position:'relative',zIndex:2,padding:28}}>
+      <div>
+        <canvas ref={canvasRef} aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+        <div style={{ position: 'relative', zIndex: 2 }}>
           <div className="hero-inner">
             <div className="avatar-wrap">
               <img src="/profile.jpg" alt="Fardin" className="avatar" />
             </div>
+
             <div className="hero-text">
-              <h1>Fardin — Gaming Studio</h1>
-              <p className="muted">Game dev · Startup founder · IT products for gamers</p>
-              <p className="muted">This demo reproduces the portfolio structure as React + TypeScript components.</p>
-              <div style={{marginTop:8}} className="tech-row">Tech: <span className="typewriter">{txt}</span></div>
+              <div className="eyebrow">AI Art Direction · Motion · Interactive Portfolio</div>
+              <h1>Designing cinematic AI experiences for modern creative brands.</h1>
+              <p className="hero-copy muted">
+                I build polished digital portfolios, generative interfaces, and motion-led product stories that feel like a
+                future-ready creative studio.
+              </p>
+
+              <div className="cta-row">
+                <a className="btn" href="#projects">Explore Work</a>
+                <a className="btn secondary" href="#contact">Start a Project</a>
+              </div>
+
+              <div className="tech-row">
+                Current focus: <span className="typewriter">{typed || 'Creative AI'}</span>
+              </div>
             </div>
           </div>
         </div>
