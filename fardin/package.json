@@ -18,5 +18,8 @@
     "vite": "4.5.14",
     "@vitejs/plugin-react": "4.0.0",
     "@types/node": "20.6.5"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.18.20"
   }
 }
