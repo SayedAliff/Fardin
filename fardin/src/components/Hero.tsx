@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const techs = ['Generative UI', 'Creative AI', 'Motion Systems', 'TypeScript', 'Canvas', 'Portfolio Design']
+  const techs = ['Python', 'JavaScript', 'TypeScript', 'C++', 'Java', 'R', 'C#', '.NET', 'Node.js', 'PHP', 'Laravel', 'React', 'Next.js', 'MySQL', 'Oracle SQL', 'Linux', 'Git']
   const [typed, setTyped] = useState('')
   const [index, setIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -155,7 +155,7 @@ export default function Hero() {
               </div>
 
               <div className="tech-row">
-                Current focus: <span className="typewriter">{typed || 'Creative AI'}</span>
+                Current focus: <span className="typewriter">{typed || 'Python'}</span>
               </div>
             </div>
           </div>
