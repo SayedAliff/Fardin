@@ -23,6 +23,20 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
     const keys = new Set<string>()
     let lightsOutMode = false
 
+    const catEdges: Array<[number, number, number, number]> = [
+      [-0.56, -0.38, -0.78, -0.98], [-0.78, -0.98, -0.92, -0.48], [-0.92, -0.48, -0.56, -0.38],
+      [0.56, -0.38, 0.78, -0.98], [0.78, -0.98, 0.92, -0.48], [0.92, -0.48, 0.56, -0.38],
+      [-0.56, -0.38, 0, -0.5], [0, -0.5, 0.56, -0.38], [-0.56, -0.38, -0.72, 0.08],
+      [-0.72, 0.08, -0.5, 0.66], [-0.5, 0.66, 0, 0.86], [0, 0.86, 0.5, 0.66],
+      [0.5, 0.66, 0.72, 0.08], [0.72, 0.08, 0.56, -0.38], [-0.72, 0.08, 0, -0.02],
+      [0, -0.02, 0.72, 0.08], [-0.5, 0.66, -0.25, 0.18], [-0.25, 0.18, 0, 0.86],
+      [0, 0.86, 0.25, 0.18], [0.25, 0.18, 0.5, 0.66], [-0.25, 0.18, 0.25, 0.18],
+      [-0.72, 0.08, -0.86, 0.52], [-0.86, 0.52, -0.64, 0.72], [0.72, 0.08, 0.86, 0.52],
+      [0.86, 0.52, 0.64, 0.72], [-0.56, -0.38, -0.28, -0.18], [-0.28, -0.18, 0, -0.5],
+      [0, -0.5, 0.28, -0.18], [0.28, -0.18, 0.56, -0.38], [-0.28, -0.18, -0.25, 0.18],
+      [0.28, -0.18, 0.25, 0.18], [-0.72, 0.08, -0.25, 0.18], [0.72, 0.08, 0.25, 0.18],
+    ]
+
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2)
       width = canvas.width = Math.floor(canvas.clientWidth * ratio)
@@ -133,18 +147,39 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
         }
       })
 
-      const playerGlow = context.createRadialGradient(player.x, player.y, 0, player.x, player.y, 55)
-      playerGlow.addColorStop(0, 'rgba(102, 240, 220, .9)')
-      playerGlow.addColorStop(0.25, 'rgba(54, 199, 196, .42)')
-      playerGlow.addColorStop(1, 'rgba(54, 199, 196, 0)')
-      context.fillStyle = playerGlow
+      const catScale = Math.min(width, height) * 0.27
+      const catTilt = (target.x - player.x) / width * 0.14
+      context.save()
+      context.translate(player.x, player.y + Math.sin(frame * 0.025) * 3)
+      context.rotate(catTilt)
+      context.lineCap = 'round'
+      context.lineJoin = 'round'
+
+      context.shadowColor = 'rgba(120, 234, 222, .82)'
+      context.shadowBlur = 18
+      context.strokeStyle = 'rgba(212, 255, 247, .94)'
+      context.lineWidth = Math.max(1.2, catScale * 0.012)
+      catEdges.forEach(([startX, startY, endX, endY]) => {
+        context.beginPath()
+        context.moveTo(startX * catScale, startY * catScale)
+        context.lineTo(endX * catScale, endY * catScale)
+        context.stroke()
+      })
+
+      context.shadowBlur = 0
+      context.strokeStyle = '#ffca86'
+      context.lineWidth = Math.max(1.8, catScale * 0.018)
       context.beginPath()
-      context.arc(player.x, player.y, 55, 0, Math.PI * 2)
-      context.fill()
-      context.fillStyle = '#d6fff3'
+      context.moveTo(0.58 * catScale, 0.48 * catScale)
+      context.bezierCurveTo(1.12 * catScale, 0.72 * catScale, 1.14 * catScale, 0.1 * catScale, 0.86 * catScale, -0.02 * catScale)
+      context.stroke()
+
+      context.fillStyle = '#ffca86'
       context.beginPath()
-      context.arc(player.x, player.y, 7 + Math.sin(frame * 0.08) * 2, 0, Math.PI * 2)
+      context.arc(-0.27 * catScale, -0.19 * catScale, catScale * 0.026, 0, Math.PI * 2)
+      context.arc(0.27 * catScale, -0.19 * catScale, catScale * 0.026, 0, Math.PI * 2)
       context.fill()
+      context.restore()
 
       animationFrame = requestAnimationFrame(draw)
     }
