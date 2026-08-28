@@ -90,9 +90,9 @@ body::before {
 .intro-copy {
 	position: absolute;
 	z-index: 1;
-	top: 25%;
-	left: 9vw;
-	max-width: 540px;
+	top: 37%;
+	left: 32px;
+	max-width: 290px;
 	animation: intro-copy-in 900ms 120ms ease both;
 }
 
@@ -106,13 +106,13 @@ body::before {
 
 .intro-copy h1 {
 	margin-bottom: 20px;
-	font-size: clamp(3.8rem, 8vw, 8.5rem);
-	line-height: 0.82;
-	letter-spacing: -0.07em;
+	font-size: clamp(2.5rem, 4.5vw, 4.8rem);
+	line-height: 0.86;
+	letter-spacing: -0.06em;
 }
 
 .intro-copy h1 em { color: #ffca86; font-family: Georgia, serif; font-weight: 400; }
-.intro-copy > p:last-child { color: rgba(243, 246, 239, 0.66); font-size: 0.98rem; line-height: 1.7; }
+.intro-copy > p:last-child { color: rgba(243, 246, 239, 0.58); font-size: 0.82rem; line-height: 1.6; }
 
 .intro-status { bottom: 32px; color: rgba(243, 246, 239, 0.58); }
 .status-live { color: #70e8d3; }
@@ -553,9 +553,10 @@ footer {
 	.intro-topline span:last-child { display: none; }
 
 	.intro-copy {
-		top: 24%;
+		top: 30%;
 		left: 24px;
 		right: 24px;
+		max-width: 230px;
 	}
 
 	.intro-copy h1 { font-size: clamp(3.2rem, 17vw, 5.4rem); }

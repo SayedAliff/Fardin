@@ -35,6 +35,11 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
       [0.86, 0.52, 0.64, 0.72], [-0.56, -0.38, -0.28, -0.18], [-0.28, -0.18, 0, -0.5],
       [0, -0.5, 0.28, -0.18], [0.28, -0.18, 0.56, -0.38], [-0.28, -0.18, -0.25, 0.18],
       [0.28, -0.18, 0.25, 0.18], [-0.72, 0.08, -0.25, 0.18], [0.72, 0.08, 0.25, 0.18],
+      [-0.5, 0.66, -0.35, 0.42], [-0.35, 0.42, -0.25, 0.18],
+      [0.5, 0.66, 0.35, 0.42], [0.35, 0.42, 0.25, 0.18],
+      [-0.72, 0.08, -0.35, 0.42], [0.72, 0.08, 0.35, 0.42],
+      [-0.35, 0.42, 0, 0.62], [0, 0.62, 0.35, 0.42],
+      [-0.5, 0.66, 0, 0.62], [0, 0.62, 0.5, 0.66],
     ]
 
     const resize = () => {
@@ -54,9 +59,11 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
 
     const move = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect()
+      const pointerX = (event.clientX - rect.left) / rect.width - 0.5
+      const pointerY = (event.clientY - rect.top) / rect.height - 0.5
       target = {
-        x: (event.clientX - rect.left) * (width / rect.width),
-        y: (event.clientY - rect.top) * (height / rect.height),
+        x: width * 0.5 + pointerX * width * 0.22,
+        y: height * 0.52 + pointerY * height * 0.16,
       }
       setStarted(true)
     }
@@ -148,9 +155,10 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
       })
 
       const catScale = Math.min(width, height) * 0.27
-      const catTilt = (target.x - player.x) / width * 0.14
+      const catTilt = (target.x - width * 0.5) / width * 0.12
+      const catDepth = (target.y - height * 0.5) / height
       context.save()
-      context.translate(player.x, player.y + Math.sin(frame * 0.025) * 3)
+      context.translate(player.x, player.y + Math.sin(frame * 0.025) * 3 + catDepth * 16)
       context.rotate(catTilt)
       context.lineCap = 'round'
       context.lineJoin = 'round'
