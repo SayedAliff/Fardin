@@ -567,6 +567,7 @@ h1 {
 
 .project-number { font-size: 0.74rem; letter-spacing: 0.08em; }
 .project-name { font-size: clamp(1.25rem, 2.7vw, 2.55rem); font-weight: 700; letter-spacing: -0.04em; }
+.project-name small { display: block; margin-top: 5px; color: var(--muted); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
 .project-arrow { font-size: 1.2rem; opacity: 0; transition: opacity 180ms ease, transform 180ms ease; }
 .project-row:hover .project-arrow, .project-row:focus-visible .project-arrow, .project-row.active .project-arrow { opacity: 1; transform: translate(3px, -3px); }
 
