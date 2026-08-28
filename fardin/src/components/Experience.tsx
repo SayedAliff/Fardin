@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Experience(){
   const items = [
-    {role:'Frontend Developer', company:'Dot BD Solutions Limited', date:'2024 - Present', desc:'Working on web apps and frontend interfaces.'},
-    {role:'Unit Lead', company:'ESAB AIUB Unit Face', date:'2023 - Present', desc:'Organizing unit activities and development.'}
+    {role:'Frontend Developer', company:'Dot BD Solutions Limited', date:'2024', desc:'Worked on web apps and frontend interfaces.'},
+    {role:'Unit Lead', company:'ESAB AIUB Unit Face', date:'2023', desc:'Organized unit activities and development.'}
   ]
   return (
     <div className="container">

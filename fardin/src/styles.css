@@ -552,6 +552,7 @@ h1 {
 	color: rgba(238, 243, 255, 0.3);
 	font: inherit;
 	text-align: left;
+	text-decoration: none;
 	cursor: pointer;
 	transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
 }
