@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const techs = ['Python', 'JavaScript', 'TypeScript', 'C++', 'Java', 'R', 'C#', '.NET', 'Node.js', 'PHP', 'Laravel', 'React', 'Next.js', 'MySQL', 'Oracle SQL', 'Linux', 'Git']
+  const techs = ['Flutter', 'React', 'Laravel', 'WordPress']
   const [typed, setTyped] = useState('')
   const [index, setIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -143,7 +143,7 @@ export default function Hero() {
             </div>
 
             <div className="hero-text">
-              <h1>Designing cinematic AI experiences for modern creative brands.</h1>
+              <h1>Building Modern Digital Experiences with AI &amp; Technology</h1>
               <p className="hero-copy muted">
                 I build polished digital portfolios, generative interfaces, and motion-led product stories that feel like a
                 future-ready creative studio.

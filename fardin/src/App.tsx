@@ -5,7 +5,6 @@ import Skills from './components/Skills'
 import Education from './components/Education'
 import Contact from './components/Contact'
 import Experience from './components/Experience'
-import Certificates from './components/Certificates'
 import IntroScene from './components/IntroScene'
 
 export default function App(){
@@ -13,7 +12,7 @@ export default function App(){
   const [active, setActive] = useState<string>('home')
   const [showIntro, setShowIntro] = useState(true)
 
-  const sections = ['home','projects','skills','experience','certificates','education','contact']
+  const sections = ['home','projects','skills','experience','education','contact']
 
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme', 'dark')
@@ -83,7 +82,6 @@ export default function App(){
         <section id="projects"><Projects /></section>
         <section id="skills"><Skills /></section>
         <section id="experience"><Experience /></section>
-        <section id="certificates"><Certificates /></section>
         <section id="education"><Education /></section>
         <section id="contact"><Contact /></section>
       </main>

@@ -19,7 +19,7 @@ export default function Contact(){
       } else {
         // fallback: open mail client
         const body = encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0A${message}`)
-        window.location.href = `mailto:fardin@example.com?subject=${encodeURIComponent('Portfolio Contact')}&body=${body}`
+        window.location.href = `mailto:fardinohe@gmail.com?subject=${encodeURIComponent('Portfolio Contact')}&body=${body}`
         setStatus('sent')
       }
     }catch(err){
@@ -30,7 +30,7 @@ export default function Contact(){
   return (
     <div className="container">
       <h2 className="section-title">Contact</h2>
-      <p className="muted">Email: fardin@example.com · Phone: +8801XXXXXXXXX</p>
+      <p className="muted">Email: fardinohe@gmail.com · Phone: +8801811633699</p>
 
       <form onSubmit={handleSubmit} style={{maxWidth:680,marginTop:8}} aria-label="Contact form">
         <label style={{display:'block',marginBottom:8}}>Name<br/>
@@ -44,7 +44,6 @@ export default function Contact(){
         </label>
         <div>
           <button className="btn" type="submit" disabled={status==='sending'}>{status==='sending' ? 'Sending...' : 'Send Message'}</button>
-          <a className="btn" style={{marginLeft:8}} href="/resume.pdf" download>Download Resume</a>
         </div>
         {status==='error' && <div style={{color:'salmon',marginTop:8}}>Error sending message. Try emailing directly.</div>}
       </form>
