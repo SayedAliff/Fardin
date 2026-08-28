@@ -155,11 +155,16 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
       })
 
       const catScale = Math.min(width, height) * 0.27
-      const catTilt = (target.x - width * 0.5) / width * 0.12
-      const catDepth = (target.y - height * 0.5) / height
+      const headFollowX = (target.x - width * 0.5) / width * 0.11
+      const headFollowY = (target.y - height * 0.5) / height * 0.08
+      const eyeLookX = Math.max(-0.035, Math.min(0.035, (target.x - width * 0.5) / width * 0.1))
+      const eyeLookY = Math.max(-0.025, Math.min(0.025, (target.y - height * 0.5) / height * 0.08))
+      const headPoint = (x: number, y: number) => {
+        const follow = Math.max(0, Math.min(1, (0.24 - y) / 0.72))
+        return [x + headFollowX * follow, y + headFollowY * follow]
+      }
       context.save()
-      context.translate(player.x, player.y + Math.sin(frame * 0.025) * 3 + catDepth * 16)
-      context.rotate(catTilt)
+      context.translate(centerX, height * 0.52 + Math.sin(frame * 0.025) * 3)
       context.lineCap = 'round'
       context.lineJoin = 'round'
 
@@ -168,9 +173,11 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
       context.strokeStyle = 'rgba(212, 255, 247, .94)'
       context.lineWidth = Math.max(1.2, catScale * 0.012)
       catEdges.forEach(([startX, startY, endX, endY]) => {
+        const [fromX, fromY] = headPoint(startX, startY)
+        const [toX, toY] = headPoint(endX, endY)
         context.beginPath()
-        context.moveTo(startX * catScale, startY * catScale)
-        context.lineTo(endX * catScale, endY * catScale)
+        context.moveTo(fromX * catScale, fromY * catScale)
+        context.lineTo(toX * catScale, toY * catScale)
         context.stroke()
       })
 
@@ -184,8 +191,8 @@ export default function IntroScene({ onEnter }: { onEnter: () => void }) {
 
       context.fillStyle = '#ffca86'
       context.beginPath()
-      context.arc(-0.27 * catScale, -0.19 * catScale, catScale * 0.026, 0, Math.PI * 2)
-      context.arc(0.27 * catScale, -0.19 * catScale, catScale * 0.026, 0, Math.PI * 2)
+      context.arc((-0.27 + headFollowX + eyeLookX) * catScale, (-0.19 + headFollowY + eyeLookY) * catScale, catScale * 0.026, 0, Math.PI * 2)
+      context.arc((0.27 + headFollowX + eyeLookX) * catScale, (-0.19 + headFollowY + eyeLookY) * catScale, catScale * 0.026, 0, Math.PI * 2)
       context.fill()
       context.restore()
 

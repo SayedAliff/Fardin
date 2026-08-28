@@ -8,20 +8,36 @@ export default function Projects(){
   ]
   const [open, setOpen] = useState(false)
   const [project, setProject] = useState<any | null>(null)
+  const [activeId, setActiveId] = useState(list[0].id)
 
   function openProject(p:any){ setProject(p); setOpen(true) }
 
   return (
-    <div className="container">
+    <div className="container project-index">
       <h2 className="section-title">Selected Work</h2>
-      <div className="grid">
-        {list.map(i=> (
-          <div key={i.id} className="card" role="button" tabIndex={0} onClick={()=> openProject(i)} onKeyDown={(e)=> e.key==='Enter' && openProject(i)} aria-haspopup="dialog" aria-controls={`project-${i.id}`}>
-            <h3>{i.title}</h3>
-            <p className="muted">{i.desc}</p>
-            <div style={{marginTop:8}}><button className="btn" onClick={(ev)=>{ev.stopPropagation(); openProject(i)}}>Details</button></div>
-          </div>
-        ))}
+      <div className="project-stage">
+        <div className={`project-art project-art-${activeId}`} aria-hidden="true">
+          <span className="art-orbit art-orbit-one" />
+          <span className="art-orbit art-orbit-two" />
+          <span className="art-core" />
+        </div>
+        <div className="project-list" role="list" aria-label="Selected projects">
+          {list.map((item, index) => (
+            <button
+              key={item.id}
+              className={`project-row${activeId === item.id ? ' active' : ''}`}
+              onMouseEnter={() => setActiveId(item.id)}
+              onFocus={() => setActiveId(item.id)}
+              onClick={() => openProject(item)}
+              role="listitem"
+              aria-haspopup="dialog"
+            >
+              <span className="project-number">0{index + 1}</span>
+              <span className="project-name">{item.title}</span>
+              <span className="project-arrow">↗</span>
+            </button>
+          ))}
+        </div>
       </div>
       <Modal open={open} onClose={()=> setOpen(false)} title={project?.title}>
         <p>{project?.details}</p>

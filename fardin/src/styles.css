@@ -75,6 +75,28 @@ body::before {
 .intro-actions {
 	position: absolute;
 	z-index: 1;
+
+	.project-stage {
+		min-height: 520px;
+	}
+
+	.project-art {
+		inset: 42% 0 0;
+	}
+
+	.project-list {
+		width: 100%;
+		padding: 18px 0 0;
+	}
+
+	.project-row {
+		grid-template-columns: 34px 1fr 24px;
+		padding: 15px 16px;
+	}
+
+	.project-name {
+		font-size: clamp(1.05rem, 5.5vw, 1.5rem);
+	}
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -445,6 +467,110 @@ h1 {
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: 18px;
 }
+
+.project-index {
+	padding-top: 26px;
+}
+
+.project-stage {
+	position: relative;
+	min-height: 430px;
+	overflow: hidden;
+	border-top: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+	background: #050914;
+}
+
+.project-art {
+	position: absolute;
+	inset: 0 0 0 30%;
+	overflow: hidden;
+	background: radial-gradient(circle at 58% 48%, rgba(102, 227, 255, 0.2), transparent 18%), linear-gradient(135deg, rgba(8, 22, 39, 0.9), rgba(4, 7, 17, 0.98));
+	transition: background 350ms ease;
+}
+
+.project-art::before,
+.project-art::after {
+	content: "";
+	position: absolute;
+	inset: 8% 12%;
+	border: 1px solid rgba(102, 227, 255, 0.32);
+	transform: rotate(18deg) skewY(-12deg);
+	box-shadow: 0 0 50px rgba(102, 227, 255, 0.12), inset 0 0 50px rgba(102, 227, 255, 0.08);
+	animation: project-drift 8s ease-in-out infinite alternate;
+}
+
+.project-art::after {
+	inset: 18% 25%;
+	border-color: rgba(255, 202, 134, 0.5);
+	transform: rotate(-22deg) skewY(15deg);
+	animation-delay: -2s;
+}
+
+.project-art-lumen {
+	background: radial-gradient(circle at 60% 48%, rgba(255, 202, 134, 0.22), transparent 17%), linear-gradient(135deg, rgba(35, 18, 27, 0.94), rgba(5, 8, 18, 0.98));
+}
+
+.project-art-lumen::before { border-radius: 50%; border-color: rgba(255, 202, 134, 0.52); transform: rotate(35deg) scaleY(0.62); }
+.project-art-lumen::after { border-radius: 50%; border-color: rgba(112, 232, 211, 0.58); transform: rotate(-35deg) scaleY(0.62); }
+
+.art-orbit {
+	position: absolute;
+	top: 50%;
+	left: 56%;
+	width: 220px;
+	height: 220px;
+	border: 1px solid rgba(112, 232, 211, 0.46);
+	border-radius: 50%;
+	transform: translate(-50%, -50%) rotate(38deg) scaleY(0.38);
+	box-shadow: 0 0 30px rgba(112, 232, 211, 0.2);
+	animation: project-spin 14s linear infinite;
+}
+
+.art-orbit-two { width: 310px; height: 310px; border-color: rgba(255, 202, 134, 0.3); transform: translate(-50%, -50%) rotate(-38deg) scaleY(0.38); animation-direction: reverse; }
+.art-core { position: absolute; top: 50%; left: 56%; width: 18px; height: 18px; border-radius: 50%; background: #ffca86; box-shadow: 0 0 36px 12px rgba(255, 202, 134, 0.32); transform: translate(-50%, -50%); }
+
+.project-list {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	width: 64%;
+	padding: 36px 0;
+}
+
+.project-row {
+	display: grid;
+	grid-template-columns: 42px 1fr 28px;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 18px 22px;
+	border: 0;
+	border-left: 3px solid transparent;
+	background: transparent;
+	color: rgba(238, 243, 255, 0.3);
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.project-row:hover,
+.project-row:focus-visible,
+.project-row.active {
+	border-left-color: var(--accent);
+	background: linear-gradient(90deg, rgba(102, 227, 255, 0.12), transparent);
+	color: var(--text);
+}
+
+.project-number { font-size: 0.74rem; letter-spacing: 0.08em; }
+.project-name { font-size: clamp(1.25rem, 2.7vw, 2.55rem); font-weight: 700; letter-spacing: -0.04em; }
+.project-arrow { font-size: 1.2rem; opacity: 0; transition: opacity 180ms ease, transform 180ms ease; }
+.project-row:hover .project-arrow, .project-row:focus-visible .project-arrow, .project-row.active .project-arrow { opacity: 1; transform: translate(3px, -3px); }
+
+@keyframes project-drift { from { transform: rotate(18deg) skewY(-12deg) translate(-10px, 8px); } to { transform: rotate(24deg) skewY(-8deg) translate(12px, -8px); } }
+@keyframes project-spin { to { transform: translate(-50%, -50%) rotate(398deg) scaleY(0.38); } }
 
 .card {
 	padding: 22px;
