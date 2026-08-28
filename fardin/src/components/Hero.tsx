@@ -143,7 +143,6 @@ export default function Hero() {
             </div>
 
             <div className="hero-text">
-              <div className="eyebrow">AI Art Direction · Motion · Interactive Portfolio</div>
               <h1>Designing cinematic AI experiences for modern creative brands.</h1>
               <p className="hero-copy muted">
                 I build polished digital portfolios, generative interfaces, and motion-led product stories that feel like a

@@ -85,7 +85,7 @@ export default function App(){
         <section id="contact"><Contact /></section>
       </main>
 
-      <footer className="py-8 text-center text-secondary">Demo portfolio — Fardin</footer>
+      <footer className="py-8 text-center text-secondary">© 2026 All rights reserved.</footer>
     </div>
   )
 }
