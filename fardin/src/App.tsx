@@ -6,10 +6,12 @@ import Education from './components/Education'
 import Contact from './components/Contact'
 import Experience from './components/Experience'
 import Certificates from './components/Certificates'
+import IntroScene from './components/IntroScene'
 
 export default function App(){
   const [mobileOpen, setMobileOpen] = useState(false)
   const [active, setActive] = useState<string>('home')
+  const [showIntro, setShowIntro] = useState(true)
 
   const sections = ['home','projects','skills','experience','certificates','education','contact']
 
@@ -43,6 +45,7 @@ export default function App(){
 
   return (
     <div>
+      {showIntro && <IntroScene onEnter={() => setShowIntro(false)} />}
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header">
         <nav className="nav container">
